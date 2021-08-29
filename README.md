@@ -382,7 +382,7 @@ We can now deploy Qt to our RPi. We will again make use of the rsync command. Fi
 	
 You should now see a new folder named "qt5.15" here. Copy this to the raspberry pi using the following command [replace 192.168.1.7 with your RPi's IP address]:
 
-	rsync -avz --rsync-path="sudo rsync" qt5.15 pi@192.168.1.7:/usr/local
+	rsync -avz --rsync-path="sudo rsync" qt5.15 pi@192.168.0.7:/usr/local
 
 
 ## Step 5: Update linker on Raspberry Pi
@@ -453,47 +453,4 @@ However, if you want to do this, there are guides available online, including in
 
 
 
-
-ON RASPBERRY:
-sudo apt-get update
-sudo apt-get build-dep qt4-x11
-
-sudo apt-get build-dep qtbase-opensource-src
-
-sudo apt-get install libegl1-mesa libegl1-mesa-dev libgles2-mesa libgles2-mesa-dev
-sudo apt-get install wiringpi libnfc-bin libnfc-dev fonts-texgyre libts-dev
-sudo apt-get install libbluetooth-dev bluez-tools gstreamer1.0-plugins* libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenal-data libsndio7.0 libopenal1 libopenal-dev pulseaudio
-
-
-ON HOST:
-sudo apt update
-sudo apt install build-essential
-mkdir ~/raspi
-cd ~/raspi
-
-git clone https://github.com/raspberrypi/tools
-mkdir sysroot sysroot/usr
-
-rsync -avz pi@rpi_ip_address:/lib sysroot
-
-rsync -avz pi@rpi_ip_address:/usr/include sysroot/usr
-
-rsync -avz pi@rpi_ip_addressi:/usr/lib sysroot/usr
-wget https://raw.githubusercontent.com/riscv/riscv-poky/master/scripts/sysroot-relativelinks.py
-chmod +x sysroot-relativelinks.py
-./sysroot-relativelinks.py sysroot
-git clone git://code.qt.io/qt/qtbase.git -b 5.12.6
-cd qtbase
-
-
-./configure release -opengl es2 -device linux-rasp-pi3-vc4-g++ -device-option CROSS_COMPILE=~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf -sysroot ~/raspi/sysroot -opensource -confirm-license -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v
-
-
-make -j4
-make install
-rsync -avz qt5pi pi@rpi_ip_address:/usr/local
-
-
-ON RASPBERRY:
-echo /usr/local/qt5pi/lib | sudo tee /etc/ld.so.conf.d/qt5pi.conf
 
