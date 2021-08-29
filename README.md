@@ -267,10 +267,10 @@ rsync will let us sync any changes we make on the Raspberry Pi with our PC and v
 
 For now, we want to sync (i.e. copy) over all the relevant files from the RPi. To do this, enter the following commands [change *192.168.1.7* with the IP address for your RPi]:
 
-	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.1.7:/lib sysroot
-	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.1.7:/usr/include sysroot/usr
-	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.1.7:/usr/lib sysroot/usr
-	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.1.7:/opt/vc sysroot/opt
+	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.0.7:/lib sysroot
+	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.0.7:/usr/include sysroot/usr
+	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.0.7:/usr/lib sysroot/usr
+	rsync -avz --rsync-path="sudo rsync" --delete pi@192.168.0.7:/opt/vc sysroot/opt
 
 Note: Double check after each of the above commands that all the files have been copied. There will be an information message if there were any issues. 
 You can run any of those lines again as much as you want if you want to check that all files have been copied. rsync only copies files if any changes have been made.
